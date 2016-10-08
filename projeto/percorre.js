@@ -1,7 +1,7 @@
-function percorreArray(trsPacientes, comportamento) {
-	for (var i = 0; i < trsPacientes.length; i++) {
-		var trPaciente = trsPacientes[i];
+function percorreArray(trs, comportamento) {
+	for (var i = 0; i < trs.length; i++) {
+		var tr = trs[i];
 
-		comportamento(trPaciente);
+		comportamento(tr);
 	}	
 }
