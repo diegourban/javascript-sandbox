@@ -8,7 +8,22 @@ class NegociacaoController {
 
 		// this de uma função é dinâmico, dependendo do contexto
 		// escopo de arrow function é léxico, this não muda de acordo com o contexto
-		this._listaNegociacoes = new ListaNegociacoes(modelo => this._negociacoesView.update(modelo));
+		//this._listaNegociacoes = new ListaNegociacoes(modelo => this._negociacoesView.update(modelo));
+		let self = this;
+		this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
+
+			get(target, prop, receiver) {
+				if(['adiciona', 'esvazia'].includes(prop) && typeof(target[prop]) === typeof(Function)) {
+					return function() {
+						console.log(`interceptando ${prop}`);
+						Reflect.apply(target[prop], target, arguments);
+						self._negociacoesView.update(target);
+					}
+				}
+				return Reflect.get(target, prop, receiver);
+			}
+		});
+
 		this._negociacoesView = new NegociacoesView($('#negociacoesView'));
 		this._negociacoesView.update(this._listaNegociacoes);
 
