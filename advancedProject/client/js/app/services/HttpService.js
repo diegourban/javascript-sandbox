@@ -1,6 +1,20 @@
 class HttpService {
 
+	_handleErrors(res) {
+		if(!res.ok) {
+			throw new Error(res.statusText);
+		}
+
+		return res;
+	}
+
 	get(url) {
+		return fetch(url)
+			.then(res => this._handleErrors(res))
+			.then(res => res.json());
+	}
+
+	get_old(url) {
 		return new Promise((resolve, reject) => {
 			let xhr = new XMLHttpRequest(); // creating a xml http request
 			xhr.open('GET', url); // defining the method and address to access
@@ -8,7 +22,7 @@ class HttpService {
 			// configs
 			xhr.onreadystatechange = () => {
 				/*
-				status:
+				readyState:
 				0: requisição ainda não iniciada
 				1: conexão com servidor estabelecida
 				2: requisição recebida
@@ -29,6 +43,15 @@ class HttpService {
 	}
 
 	post(url, dado) {
+		return fetch(url, {
+			header: {'Content-type' : 'application/json'},
+			method: 'post',
+			body: JSON.stringify(dado)
+		})
+		.then(res => this._handleErrors(res));
+	}
+
+	post_old(url, dado) {
         return new Promise((resolve, reject) => {
 
             let xhr = new XMLHttpRequest();
