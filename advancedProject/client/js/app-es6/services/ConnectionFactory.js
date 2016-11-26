@@ -1,62 +1,59 @@
-var ConnectionFactory = (function () {
-	
-	const stores = ['negociacoes'];
-	const version = 4;
-	const dbName = 'javascript-sandbox';
-	
-	var connection = null;
+const stores = ['negociacoes'];
+const version = 4;
+const dbName = 'javascript-sandbox';
 
-	var close = null;
+let connection = null;
 
-	return class ConnectionFactory {
+let close = null;
 
-		constructor() {
-			throw new Error('Não é possível criar instâncias de ConnectionFactory');
-		}
+export class ConnectionFactory {
 
-		static getConnection() {
-			return new Promise((resolve, reject) => {
-				let openRequest = window.indexedDB.open(dbName, version);
+	constructor() {
+		throw new Error('Não é possível criar instâncias de ConnectionFactory');
+	}
 
-				openRequest.onupgradeneeded = e => {
-					ConnectionFactory._createStores(e.target.result);
-				};
+	static getConnection() {
+		return new Promise((resolve, reject) => {
+			let openRequest = window.indexedDB.open(dbName, version);
 
-				openRequest.onsuccess = e => {
-					if(!connection) {
-						connection = e.target.result;
+			openRequest.onupgradeneeded = e => {
+				ConnectionFactory._createStores(e.target.result);
+			};
 
-						// monkey patching
-						close = connection.close.bind(connection);
-						connection.close = function () {
-							throw new Error('Você não pode fechar diretamente a conexão');
-						};
-					}
-					resolve(connection);
-				};
+			openRequest.onsuccess = e => {
+				if(!connection) {
+					connection = e.target.result;
 
-				openRequest.onerror = e => {
-					console.log(e.target.error);
-					reject(e.target.error.name);
-				};
-			});
-		}
-
-		static _createStores(connection) {
-			stores.forEach(store => {
-				if(connection.objectStoreNames.contains(store)) {
-					connection.deleteObjectStore(store);
+					// monkey patching
+					close = connection.close.bind(connection);
+					connection.close = function () {
+						throw new Error('Você não pode fechar diretamente a conexão');
+					};
 				}
-				connection.createObjectStore(store, {autoIncrement: true});
-			});
-		}
+				resolve(connection);
+			};
 
-		static closeConnection() {
-			if(connection) {
-				//Reflect.apply(close, connection, []); // bind or this
-				close();
-				connection = null;
+			openRequest.onerror = e => {
+				console.log(e.target.error);
+				reject(e.target.error.name);
+			};
+		});
+	}
+
+	static _createStores(connection) {
+		stores.forEach(store => {
+			if(connection.objectStoreNames.contains(store)) {
+				connection.deleteObjectStore(store);
 			}
+			connection.createObjectStore(store, {autoIncrement: true});
+		});
+	}
+
+	static closeConnection() {
+		if(connection) {
+			//Reflect.apply(close, connection, []); // bind or this
+			close();
+			connection = null;
 		}
 	}
-})();
+}

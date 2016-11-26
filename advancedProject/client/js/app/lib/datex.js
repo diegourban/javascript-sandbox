@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 System.register([], function (_export, _context) {
 	"use strict";
 
-	var _createClass, View;
+	var _createClass, DateHelper;
 
 	function _classCallCheck(instance, Constructor) {
 		if (!(instance instanceof Constructor)) {
@@ -32,32 +32,26 @@ System.register([], function (_export, _context) {
 				};
 			}();
 
-			_export('View', View = function () {
-				function View(elemento) {
-					_classCallCheck(this, View);
-
-					this._elemento = elemento;
+			DateHelper = function () {
+				function DateHelper() {
+					_classCallCheck(this, DateHelper);
 				}
 
-				_createClass(View, [{
-					key: 'template',
-					value: function template() {
-						// caso alguma classe filha esqueça de implementar o método _template
-						// lança uma exceção para lembrar de implementar
-						throw new Error('O método template deve ser implementado');
+				_createClass(DateHelper, [{
+					key: "dateToString",
+					value: function dateToString(date) {
+						/* do something */
 					}
 				}, {
-					key: 'update',
-					value: function update(modelo) {
-						this._elemento.innerHTML = this.template(modelo);
+					key: "stringToDate",
+					value: function stringToDate(string) {
+						/* do something */
 					}
 				}]);
 
-				return View;
-			}());
-
-			_export('View', View);
+				return DateHelper;
+			}();
 		}
 	};
 });
-//# sourceMappingURL=View.js.map
+//# sourceMappingURL=datex.js.map
