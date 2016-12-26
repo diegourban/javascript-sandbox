@@ -2,12 +2,16 @@
 
 ### Installation
 
-`$ npm install`
+`npm install`
 
 ### Run Server
 
-`$advancedProject/server npm start`
+On advancedProject/server run:
+
+`npm start`
 
 ### Run Client Babel watcher
 
-`$advancedProject/client npm run watch`
+On advancedProject/client run:
+
+`npm run watch`
