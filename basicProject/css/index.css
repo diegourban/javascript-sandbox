@@ -1,4 +1,4 @@
- *{
+*{
 	box-sizing: border-box;
  }
 
@@ -8,13 +8,18 @@ body{
 }
 
 header{
-	background-color: #333;	
+	background-color: #333;
 	height: 3em;
 	color: #FFF;
 	margin-bottom: 1em;
 }
 
 header h1{
+	font-size: 2em;
+	display:inline-block;
+	vertical-align:	middle;
+}
+header h2{
 	font-size: 2em;
 	display:inline-block;
 	vertical-align:	middle;
@@ -28,7 +33,7 @@ header .container:before{
 }
 
 .container{
-	width: 80%;
+	width: 60%;
 	height: 100%;
 	margin: 0 auto;
 }
@@ -49,24 +54,20 @@ section h2{
 table{
 	width: 100%;
 	margin-bottom : .5em;
+    table-layout: fixed;
+
 }
 
 td, th {
 	padding: .7em;
 	margin: 0;
 	border: 1px solid #ccc;
-	text-align: left;
+	text-align: center;
 }
 
 th{
 	font-weight: bold;
 	background-color: #EEE;
-}
-
-input[type=text]{
-	border: 1px solid #ccc;
-	padding: .7em;
-	width: 100%;
 }
 
 label{
@@ -75,23 +76,24 @@ label{
 	margin-bottom: .2em;
 }
 
-fieldset{
-	border: 0;
+.campo{
 	margin: 0;
 	padding-bottom: 1em;
+	width: 100%;
+	border: 1px solid #ccc;
+	padding: .7em;
+	width: 100%;
 }
 
 .campo-medio{
-	width: 50%;
-	float: left;
-}
-
-.campo-medio:nth-child(even){
+	display: inline-block;
 	padding-right: .5em;
 }
 
-.campo-medio:nth-child(odd){
-	padding-left: .5em;
+.grupo{
+	width: 32%;
+	display: inline-block;
+	padding: 10px 0px;
 }
 
 button{
@@ -106,9 +108,50 @@ button{
 	background-color:#0c8cd3;
 	border-color: #04324c;
 	width: 20%;
+    display: block;
+    clear: both;
+    margin: 10px 0px;
+
 }
 
 button:active{
 	margin-top:0px;
 	border: 0;
+}
+
+button[disabled=disabled], button:disabled {
+    background-color: gray;
+	border-color: darkgray;
+
+}
+
+.adicionar-paciente{
+    margin-top: 30px;
+}
+
+.campo-invalido{
+	border: 1px solid red;
+}
+
+.paciente-invalido {
+	background-color: lightcoral;
+}
+
+#mensagens-erro {
+	color: red;
+}
+
+.fadeOut {
+	opacity: 0;
+	transition: 0.5s;
+}
+
+#filtrar-tabela {
+	width: 200px;
+	height: 35px;
+	margin-bottom: 10px;
+}
+
+.invisivel {
+	display: none;
 }
